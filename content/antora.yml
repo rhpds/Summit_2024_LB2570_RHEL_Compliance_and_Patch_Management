@@ -1,6 +1,6 @@
 ---
 name: modules
-title: Sample Module Title
+title: RHEL Compliance and Patch Management Workshop
 version: main
 nav:
   - modules/ROOT/nav.adoc
