@@ -1,22 +1,37 @@
 ---
 name: modules
 title: Sample Module Title
-version: master
+version: main
 nav:
   - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
-    lab_name: "I'm the lab_name var"
-    release-version: master
+    lab_name: "RHEL Compliance and Patch Management Workshop"
+    release-version: main
     page-pagination: true
-    my_var: "foo"
-    guid: my-guid
-    ssh_user: devops
-    ssh_password: devops
-    ssh_command: ssh devops@bastion.{guid}.example.opentlc.com
+    guid: abcde
+    ssh_username: student
+    ssh_password: MTpasswd
+    ssh_command: ssh student@ansible-1.{guid}.example.opentlc.com
+    automationcontroller_url: https://ansible-1.{guid}.example.opentlc.com
+    automationcontroller_user_name: admin
+    automationcontroller_user_password: MTpasswd
+    satellite_url: https://satellite.{guid}.example.opentlc.com
+    satellite_user_name: admin
+    satellite_user_password: MTpasswd
+    vscode_server_password: MTpasswd
+    vscode_server_url: https://ansible-1.wmrhz.sandbox2418.opentlc.com/editor/
+    cockpit_url: https://ansible-1.wmrhz.sandbox2418.opentlc.com:9090/
+    cockpit_user_name: student
+    cockpit_user_password: MTpasswd
     page-links:
-    - url: https://redhat.com
-      text: Red Hat
-    - url: https://www.redhat.com/en/summit
-      text: Summit
+    - url: {automationcontroller_url}
+      text: "AAP Web UI"
+    - url: {satellite_url}
+      text: "Satellite Web UI"
+    - url: {vscode_server_url}
+      text: "VS Code Console"
+    - url: {cockpit_url}
+      text: "RHEL Web Console"
+...
