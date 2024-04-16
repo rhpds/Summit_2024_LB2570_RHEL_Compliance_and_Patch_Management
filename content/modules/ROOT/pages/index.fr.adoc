@@ -1,0 +1,78 @@
+= Atelier de conformité RHEL et de gestion des correctifs
+
+*Lisez ceci dans d'autres langues*: image:../../images/uk.png[uk] xref:README.adoc[English], image:../../images/fr.png[france] xref:README.fr.adoc[Française].
+
+Dans cet atelier, vous apprendrez à tirer le meilleur parti de Red Hat Satellite en concert avec Red Hat Ansible Automation Platform.
+
+== Table des matières
+
+* <<cas-dutilisation,Cas d'ulilisation>>
+* <<présentations,Présentations>>
+* <<planification-du-temps,Planification du temps>>
+* <<diagramme-du-laboratoire,Diagramme du laboratoire>>
+* <<exercices,Exercices>>
+
+== Cas d'utilisation
+
+Cet atelier se concentre actuellement sur ces deux points sensibles de gestion d'un parc linux:
+
+* Conformité (OpenSCAP Scanning) et gestion de la vulnérabilité
+* Gestion des Patches/Paquetages
+
+== Présentations
+
+Les exercices sont auto-explicatifs et guident les participants tout au long de l'atelier.
+Tous les concepts sont expliqués lorsqu'ils sont introduits.
+
+Il y a une présentation optionnelle disponible pour soutenir les ateliers et expliquer plus en détails l'automatisation, les bases d'Ansible et les sujets des exercices.
+La présentation de l'atelier est située ici, en anglais link:../../decks/ansible_smart_mgmt_fr.pdf[Atelier automatisé de gestion intelligente].
+_https://docs.google.com/presentation/d/1XpqjDbjEHel2FZLJdrKz67FA2RYKw3eZPY0oqzd8qiY[Red Hat Internal link]_
+
+Jetez également un coup d'oeil à notre présentation sur les meilleurs pratiques avec Ansible: en anglais link:../../decks/ansible_best_practices.pdf[Pratiques exemplaires disponibles]
+
+== Planification du temps
+
+Le temps nécessaire pour faire les ateliers dépend fortement de plusieurs facteurs : le nombre de participants, la familiarité avec Linux en général et les discussions entre les ateliers.
+
+Cela dit, les exercices eux-mêmes devraient prendre environ 4 heures.
+Chaque laboratoire dure environ 30 à 45 minutes.
+La présentation qui accompagne elle-même ajoute ~1 heure.
+
+== Diagramme du laboratoire
+
+image::../../images/ansible_smart_mgmt_diagram.png#centreme[diagramme automatique de laboratoire de gestion intelligente]
+
+=== Environnement
+
+|===
+| Rôle | Nom dans l'inventaire
+
+| Automation controller
+| ansible-1
+
+| Serveur Satellite
+| satellite
+
+| Host géré 1 - RHEL
+| node1
+
+| Host géré 2 - RHEL
+| node2
+
+| Host géré 3 - RHEL
+| node3
+
+| Host géré 4 - CentOS
+| node4
+
+| Host gété 5 - CentOS
+| node5
+
+| Host gété 6 - CentOS
+| node6
+|===
+
+== Exercices
+
+* xref:1-compliance/README.fr.adoc[Exercice 1: Conformité / Gestion de la vulnérabilité]
+* xref:2-patching/README.fr.adoc[Exercice 2: Gestion des correctifs / OS]
