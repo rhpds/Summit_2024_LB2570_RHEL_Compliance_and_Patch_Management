@@ -1,9 +1,10 @@
 = {lab_name}
 
 == Automating Patch Management
+:experimental:
 
-*Read this in other languages*:  + image:../../../images/uk.png[uk] xref:README.adoc[English], image:../../../images/fr.png[france] xref:README.fr.adoc[Français].
-+
+*Read this in other languages*:  image:uk.png[uk] xref:./README.adoc[English], image:fr.png[france] xref:./README.fr.adoc[Français].
+
 
 In this part of the workshop, we will learn how to leverage the use of workflows in Ansible Automation Platform to orchestrate patch management for several linux servers . Automating patch management reduces human error and improves configuration and patch accuracy.
 Additionally, automation provides capabilities to reduce the manual input associated with identifying, testing and patching systems.
@@ -184,4 +185,4 @@ image::2-patching/2-patching-aap2-server-patching-kernel-exclude.png[kernel patc
 ==== 7. End Lab
 
 * You have finished the lab.
-* xref:../README.adoc[Return to the main workshop page]
+* xref:index.adoc[Return to the main workshop page]

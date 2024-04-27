@@ -1,7 +1,10 @@
-= Atelier Automated Satellite  : Automatisation de la gestion des correctifs
+= Atelier Automated Satellite  
 
-*Lisez ceci dans d'autres langues*:  + image:../../../images/uk.png[uk] xref:README.adoc[English], image:../../../images/fr.png[france] xref:README.fr.adoc[Française].
-+
+== Automatisation de la gestion des correctifs
+:experimental:
+
+*Lisez ceci dans d'autres langues*:  image:uk.png[uk] xref:./README.adoc[English], image:fr.png[france] xref:./README.fr.adoc[Française].
+
 
 Dans cette partie de l'atelier, nous apprendrons comment utiliser des workflows dans Ansible Automation Platform pour orchestrer la gestion de correctifs pour plusieurs serveurs linux.
 Automatiser la gestion des correctifs réduit les erreurs humaines et améliore la configuration et la précision des correctifs.
@@ -180,4 +183,4 @@ image::2-patching/2-patching-aap2-server-patching-kernel-exclude.png[patchs du n
 ==== 7. Fin du laboratoire
 
 * Félicitions, vou avez terminé le laboratoire !
-* xref:../README.fr.adoc[Retour à la page principale de l'atelier]
+* xref:index.fr.adoc[Retour à la page principale de l'atelier]
