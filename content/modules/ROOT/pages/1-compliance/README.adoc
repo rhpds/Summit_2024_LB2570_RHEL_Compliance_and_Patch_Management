@@ -1,19 +1,28 @@
 = {lab_name}
 
 == Configuring and performing an OpenSCAP Scan
-
 :experimental:
 
-*Read this in other languages*:  + image:../../../images/uk.png[uk] xref:README.adoc[English], image:../../../images/fr.png[france] xref:README.fr.adoc[Français].
-+
+*Read this in other languages*:  image:uk.png[uk] xref:./README.adoc[English], image:fr.png[france] xref:./README.fr.adoc[Français].
+
 
 In this exercise, we will learn how to configure and perform an OpenSCAP scan using playbooks in Ansible Automation Platform 2 with Satellite.
+
 When running multiple Red Hat Enterprise Linux systems, it's important to keep all of these systems compliant with a meaningful security policy and perform security scans often.
-OpenSCAP is an open source project that is used by government agencies, corporations, as well as e-commerce (just to name a few examples).
-OpenSCAP provides tools for automated vulnerability checking.
-Satellite can be loaded with RPM packages for SCAP workbench v1.2.0-8 which will provide scanning capabilities.
-Satellite is also loaded with the SCAP security guide v0.1.54-3 for RHEL7 and CentOS devices which provides the appropriate XCCDF benchmarks for PCI and STIG compliance for the purpose of this exercise.
-This exercise will focus on RHEL systems, CentOS will be out of scope.
+OpenSCAP is an open source project that defines the language used to express compliance checklists in human and machine readable form (XML). 
+Government agencies, corporations, and e-commerce organizations, for example, provide their compliance checklists using OpenSCAP.
+The OpenSCAP project also develops tools for automated compliance checking.
+Red Hat Satellite is configured with openscap integration enabled by default. 
+This installs openscap ansible modules, roles, and related tools. Satellite is also loaded with the SCAP security guide (SSG)(scap-seruity-guide.noarch). 
+The SSG contains the checklist files for multiple standards, for multiple operating systems and releases. 
+These checklists allow for scanning systems to evaluate benchmarks for like CIS, PCI, HIPPA, Justice and DISA-STIG compliance. 
+
+The SCAP packages are available with every install of RHEL. 
+You can also install the RPM package for the SCAP workbench (e.g. scap-workbench.x86_64) which provides the ability to load and examine the checklists in a user friendly GUI. 
+You can create a tailoring file for any of the included profiles that allows you to turn on or turn off specific checks to meet the your organization's unique requirements. You can launch and test scans based on your profiles using the tool. 
+Your tailoring files and the profile can be loaded into Satellite and assigned to groups of systems customize scanning and reporting. Satellite produces reports to meet audit specifications.
+
+This exercise will focus on standard profiles for PCI and DISA STIG for RHEL systems. Tailoring and other operating systems will be out of scope.
 
 == Environment
 
@@ -44,8 +53,8 @@ image::1-compliance/1-compliance-aap2-Satellite_Dashboard.png[satellite_dash]
 
 Now we will start configuring a compliance policy that we can use to scan our RHEL nodes.
 
-* In Satellite hover over 'Hosts' from the menu on the left side pane, and then click on 'Policies'
-* Click on the "New Policy" button, and fill out the details as followed in step 3.
+* In Satellite hover over 'Hosts' from the menu pane on the left side, and then click on 'Policies'
+* Click on the "New Policy" button, and fill out the details as in step 3 below.
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP.png[satellite_policy]
 
@@ -77,7 +86,7 @@ image::1-compliance/1-compliance-aap2-Satellite_SCAP4.png[satellite_policy]
 
 * Steps 5, 6, and 7 as part of the New Compliance Policy can use default values.
 Click "Next" through "Locations", and "Organizations".
-For "Hostgroups" click "Submit"
+On "Hostgroups" click "Submit" to create the policy.
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP5.png[satellite_policy]
 
@@ -97,7 +106,7 @@ image::1-compliance/1-compliance-aap2-dashboard.png[aap_dashboard]
 
 This step will allow us to scan a single rhel7 host with the `PCI_Compliance` policy that we configured on Satellite.
 
-* In Ansible Automation Platform click 'Templates' from the left side pane menu
+* In Ansible Automation Platform click 'Templates' from the menu pane on left side
 * Click the BLUE 'Add' drop-down icon and select 'Add job template' from the drop-down selection menu.
 Fill out the details as follows:
 +
@@ -117,8 +126,8 @@ Playbook: configure_openscap.yml (Click drop-down to select.)
 
 Credentials: Workshop Credential, and Satellite Credential
 (Click the magnifying glass icon to select.)
-  NOTE: In this new menu. Select the Workshop Credential radio button
-  button. The 'Selected Category' for this is 'Machine'. Next, use the
+  NOTE: In this new menu. Select the Workshop Credential radio button. 
+  The 'Selected Category' for this is 'Machine'. Next, use the
   'Selected Category' drop-down menu again to select Satellite_Collection.
   You will choose the Satellite Credential. This will provide you with
   two sets of credentials. Choosing 'Select' will save your changes
@@ -136,9 +145,9 @@ policy_name:
 image::1-compliance/1-compliance-aap2-template1.png[aap_template]
 
 * Leave the rest of the fields blank or as they are, and click 'Save'.
-You can then select 'Launch' to deploy the job template.
+You can then select 'Launch' to run the job template.
 
-Selecting launch will take you to the menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure] output window where you will be able to follow each task executed as part of the playbook.
+Selecting launch will take you to the menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure] output window where you will be able to follow the job as each task in the playbook executed.
 This will take approximately 3 mins to complete.
 Wait for the job template to complete before proceeding to the next step.
 
@@ -148,13 +157,13 @@ image::1-compliance/1-compliance-aap2-OpenSCAP_Configure-output1.png[aap_output]
 ==== 6. Navigate back to Satellite to examine the Asset Reporting File (ARF).
 
 * Hover over 'Hosts' from the side pane menu and then click on 'Reports'.
-* Click on the 'Full Report' button, under Actions, for 'node1.example.com' to evaluate
+* Click on the 'Full Report' button, under Actions, for 'node1.example.com' to see the report (This may take a few seconds)
 * Scroll down to the *Rule Overview* section.
-You can sort by "Pass", "Fail", "Fixed", or any number of qualifiers as well as group rules by "Severity"
+You can filter by "Pass", "Fail", "Fixed", or any number of qualifiers as well as group rules by "Severity"
 
 image::1-compliance/1-compliance-aap2-Satellite_ARF.png[aap_arf]
 
-* Selecting a rule presents further information regarding rationale as well as a description of the rule that includes references and identifiers.
+* Selecting a rule presents detailed information regarding rationale as well as a description of the rule that includes references and identifiers.
 * Now, uncheck everything except the *fail* checkbox.
 Then scroll down and click on the failure "Prevent Login to Accounts With Empty Password"
 * If you scroll the page you will notice multiple remediation options including an 'Ansible' snippet.
@@ -236,4 +245,4 @@ image::1-compliance/1-compliance-aap2-Satellite_ARF-Final.png[aap_arf]
 ==== 9. End Lab
 
 * You have finished the lab.
-* Continue to xref:../2-patching/README.adoc[Exercise 2: Patch Management / OS], OR xref:../README.adoc[Return to the main workshop page]
+* Continue to xref:../2-patching/README.adoc[Exercise 2: Patch Management / OS], OR xref:../index.adoc[Return to the main workshop page]

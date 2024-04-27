@@ -1,9 +1,6 @@
 = {lab_name}
 
-*Read this in other languages*
-
-image::uk.png[English,xref=README.adoc]
-image::fr.png[Français,xref=README.fr.adoc]
+*Read this in other languages*:  image:uk.png[uk] xref:./index.adoc[English], image:fr.png[france] xref:./index.fr.adoc[Français]
 
 In this workshop, you will learn how to get the most from Red Hat Satellite in concert with Red Hat Ansible Automation Platform.
 

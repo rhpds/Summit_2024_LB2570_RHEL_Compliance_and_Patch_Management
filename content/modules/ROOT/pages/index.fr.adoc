@@ -1,6 +1,6 @@
 = Atelier de conformité RHEL et de gestion des correctifs
 
-*Lisez ceci dans d'autres langues*: image:../../images/uk.png[uk] xref:README.adoc[English], image:../../images/fr.png[france] xref:README.fr.adoc[Française].
+*Lisez ceci dans d'autres langues*:  image:uk.png[uk] xref:./index.adoc[English], image:fr.png[france] xref:./index.fr.adoc[Français]
 
 Dans cet atelier, vous apprendrez à tirer le meilleur parti de Red Hat Satellite en concert avec Red Hat Ansible Automation Platform.
 
@@ -28,7 +28,7 @@ Il y a une présentation optionnelle disponible pour soutenir les ateliers et ex
 La présentation de l'atelier est située ici, en anglais link:../../decks/ansible_smart_mgmt_fr.pdf[Atelier automatisé de gestion intelligente].
 _https://docs.google.com/presentation/d/1XpqjDbjEHel2FZLJdrKz67FA2RYKw3eZPY0oqzd8qiY[Red Hat Internal link]_
 
-Jetez également un coup d'oeil à notre présentation sur les meilleurs pratiques avec Ansible: en anglais link:../../decks/ansible_best_practices.pdf[Pratiques exemplaires disponibles]
+Jetez également un coup d'oeil à notre présentation sur les meilleurs pratiques avec Ansible: en anglais link:https://aap2.demoredhat.com/decks/ansible_best_practices_fr.pdf[Pratiques exemplaires disponibles]
 
 == Planification du temps
 
@@ -40,7 +40,7 @@ La présentation qui accompagne elle-même ajoute ~1 heure.
 
 == Diagramme du laboratoire
 
-image::../../images/ansible_smart_mgmt_diagram.png#centreme[diagramme automatique de laboratoire de gestion intelligente]
+image::workbench_diagram.png[diagramme automatique de laboratoire de gestion intelligente]
 
 === Environnement
 

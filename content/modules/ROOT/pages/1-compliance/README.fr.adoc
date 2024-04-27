@@ -1,8 +1,10 @@
-= Atelier Automated Satellite : Configurer et exécuter une analyse OpenSCAP
+= Atelier Automated Satellite 
+
+== Configurer et exécuter une analyse OpenSCAP
 :experimental:
 
-*Lisez ceci dans d'autres langues*:  + image:../../../images/uk.png[uk] xref:README.adoc[English], image:../../../images/fr.png[france] xref:README.fr.adoc[Française].
-+
+*Lisez ceci dans d'autres langues*:  image:uk.png[uk] xref:./README.adoc[English], image:fr.png[france] xref:./README.fr.adoc[Française].
+
 
 Dans cet exercice, nous allons apprendre à configurer et à effectuer une analyse OpenSCAP à l'aide de playbooks dans Ansible Automation Platform 2 avec Satellite.
 Lorsque vous exécutez plusieurs systèmes Red Hat Enterprise Linux, il est important de maintenir tous ces systèmes conformes à une politique de sécurité et d'effectuer des analyses de sécurité fréquemment.
@@ -234,4 +236,4 @@ image::1-compliance/1-compliance-aap2-Satellite_ARF-Final.png[aap_arf]
 ==== 9. Fin du laboratoire
 
 * Félicitations, vous avez terminé le laboratoire !
-* Continuer à xref:../2-patching/README.fr.adoc[Exercice 2: Gestion des correctifs], OU xref:../README.fr.adoc[Retour à la page principale de l'atelier]
+* Continuer à xref:../2-patching/README.fr.adoc[Exercice 2: Gestion des correctifs], OU xref:index.fr.adoc[Retour à la page principale de l'atelier]
