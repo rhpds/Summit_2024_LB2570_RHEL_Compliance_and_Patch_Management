@@ -2,7 +2,7 @@
 
 *Read this in other languages*:  image:uk.png[uk] xref:./index.adoc[English], image:fr.png[france] xref:./index.fr.adoc[Français]
 
-In this workshop, you will learn how to get the most from Red Hat Satellite in concert with Red Hat Ansible Automation Platform.
+In this workshop, you will learn how to automate Red Hat Enterprise Linux compliance and patching operations utilizing Red Hat Ansible Automation Platform in concert with Red Hat Satellite.
 
 == Table of Contents
 
@@ -21,7 +21,7 @@ This workshop focuses on 2 main customer pain points:
 
 == Presentations
 
-The exercises are self explanatory and guide the participants through the entire lab.
+The exercises are self explanatory and guide participants through the entire lab.
 All concepts are explained when they are introduced.
 
 There is an optional presentation available to support the workshops and explain Automation, the basics of Ansible and the topics of the exercises in more detail.
@@ -30,8 +30,6 @@ Workshop presentation is located at https://aap2.demoredhat.com/decks/ansible_au
 Also have a look at our Ansible Best Practices Deck: https://aap2.demoredhat.com/decks/ansible_best_practices.pdf[Ansible Best Practices]
 
 == Time planning
-
-The time required to do the workshops strongly depends on multiple factors: the number of participants, how familiar those are with Linux in general and how much discussions are done in between.
 
 Each lab takes roughly 30-45 minutes.
 
@@ -58,15 +56,6 @@ image::workbench_diagram.png[{lab_name} diagram,100%,100%]
 
 | Managed Host 3 - RHEL
 | node3
-
-| Managed Host 4 - CentOS
-| node4
-
-| Managed Host 5 - CentOS
-| node5
-
-| Managed Host 6 - CentOS
-| node6
 |===
 
 == Workshop Exercises

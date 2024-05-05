@@ -32,11 +32,7 @@ Jetez également un coup d'oeil à notre présentation sur les meilleurs pratiqu
 
 == Planification du temps
 
-Le temps nécessaire pour faire les ateliers dépend fortement de plusieurs facteurs : le nombre de participants, la familiarité avec Linux en général et les discussions entre les ateliers.
-
-Cela dit, les exercices eux-mêmes devraient prendre environ 4 heures.
 Chaque laboratoire dure environ 30 à 45 minutes.
-La présentation qui accompagne elle-même ajoute ~1 heure.
 
 == Diagramme du laboratoire
 
@@ -61,15 +57,6 @@ image::workbench_diagram.png[diagramme automatique de laboratoire de gestion int
 
 | Host géré 3 - RHEL
 | node3
-
-| Host géré 4 - CentOS
-| node4
-
-| Host gété 5 - CentOS
-| node5
-
-| Host gété 6 - CentOS
-| node6
 |===
 
 == Exercices
