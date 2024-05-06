@@ -5,14 +5,23 @@
 
 *Lisez ceci dans d'autres langues*:  image:uk.png[uk] xref:./README.adoc[English], image:fr.png[france] xref:./README.fr.adoc[Française].
 
-
 Dans cet exercice, nous allons apprendre à configurer et à effectuer une analyse OpenSCAP à l'aide de playbooks dans Ansible Automation Platform 2 avec Satellite.
-Lorsque vous exécutez plusieurs systèmes Red Hat Enterprise Linux, il est important de maintenir tous ces systèmes conformes à une politique de sécurité et d'effectuer des analyses de sécurité fréquemment.
-OpenSCAP est un projet open source qui est utilisé par des agences gouvernementales, des entreprises, ainsi que par dans entreprise de commerce électronique (pour ne citer que quelques exemples).
-OpenSCAP fournit des outils pour la vérification automatique des vulnérabilités.
-Il es possilbe d'installer des manifeste SCAP workbench v1.2.0-8 en format RPM qui fournira des capacités d'analyse.
-Satellite vient avec le manifeste de sécurité SCAP v0.1.54-3 pour les systèmes RHEL7 et CentOS fournissant les tests XCCDF appropriés pour la conformité PCI et STIG.
-Cet exercice se concentrera sur les systèmes RHEL.
+
+Lorsque vous exécutez plusieurs systèmes Red Hat Enterprise Linux, il est important de maintenir tous ces systèmes conformes à une politique de sécurité significative et d'effectuer souvent des analyses de sécurité.
+OpenSCAP est un projet open source qui définit le langage utilisé pour exprimer les listes de contrôle de conformité sous une forme lisible par l'homme et la machine (XML).
+Les agences gouvernementales, les entreprises et les organisations de commerce électronique, par exemple, fournissent leurs listes de contrôle de conformité à l'aide d'OpenSCAP.
+Le projet OpenSCAP développe également des outils de vérification automatisée de la conformité.
+Red Hat Satellite est configuré avec l'intégration openscap activée par défaut.
+Cela installe les modules, les rôles et les outils associés openscap ansible. Le satellite est également chargé avec le guide de sécurité SCAP (SSG) (scap-seruity-guide.noarch).
+Le SSG contient les fichiers de liste de contrôle pour plusieurs normes, pour plusieurs systèmes d'exploitation et versions.
+Ces listes de contrôle permettent aux systèmes d'analyse d'évaluer des références telles que la conformité CIS, PCI, HIPPA, Justice et DISA-STIG.
+
+Les packages SCAP sont disponibles avec chaque installation de RHEL.
+Vous pouvez également installer le package RPM pour SCAP workbench (par exemple scap-workbench.x86_64) qui offre la possibilité de charger et d'examiner les listes de contrôle dans une interface graphique conviviale.
+Vous pouvez créer un fichier de personnalisation pour n'importe lequel des profils inclus qui vous permet d'activer ou de désactiver des vérifications spécifiques pour répondre aux exigences uniques de votre organisation. Vous pouvez lancer et tester des analyses en fonction de vos profils à l'aide de l'outil.
+Vos fichiers de personnalisation et le profil peuvent être chargés dans Satellite et attribués à des groupes de systèmes pour personnaliser l'analyse et le reporting. Satellite produit des rapports pour répondre aux spécifications d'audit.
+
+Cet exercice se concentrera sur les profils standards pour PCI et DISA STIG pour les systèmes RHEL. La personnalisation et les autres systèmes d'exploitation seront hors de portée.
 
 == Environnement
 
@@ -32,6 +41,18 @@ Cet exercice se concentrera sur les systèmes RHEL.
 ==== 1. Se connecter à Satellite
 
 * Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface utilisateur Satellite fourni, puis connectez-vous avec l'utilisateur admin.
++
+[cols="~,~"]
+|===
+| Link
+| {satellite_url}[{satellite_url}^]
+
+| Username
+| `{satellite_user_name}`
+
+| Password
+| `{satellite_user_password}`
+|===
 
 image::1-compliance/1-compliance-aap2-Satellite_login.png[login screen]
 
@@ -63,7 +84,7 @@ Puis cliquez sur "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP2.png[satellite_policy]
 
-* Sélectionnez le contenu par défaut "Red Hat rhel7" et "PCI-DSS v3.2.1 Control Baseline for Red Hat Enterprise Linux 7".
+* Sélectionnez le contenu par défaut "Red Hat rhel7" et "PCI-DSS v4.0 Control Baseline for Red Hat Enterprise Linux 7".
 Il n'y a pas de fichier d'adaptation (tailoring).
 Puis cliquez sur "Next"
 
@@ -85,6 +106,18 @@ image::1-compliance/1-compliance-aap2-Satellite_SCAP5.png[satellite_policy]
 ==== 4. Se connecter à la plate-forme d'automatisation Ansible
 
 * Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface utilisateur Ansible via le lien trouvé dans votre environnement puis connectez-vous avec l'utilisateur admin.
++
+[cols="~,~"]
+|===
+| Link
+| {automationcontroller_url}[{automationcontroller_url}^]
+
+| Username
+| `{automationcontroller_user_name}`
+
+| Password
+| `{automationcontroller_user_password}`
+|===
 
 image::1-compliance/1-compliance-aap2-login.png[login screen]
 
@@ -102,45 +135,76 @@ Cette étape nous permettra de scanner un seul hôte rhel7 avec la politique `PC
 Remplir les détails comme suit:
 +
 ....
-  Name: SATELLITE / Compliance - OpenSCAP_Configure
+Name: SATELLITE / Compliance - OpenSCAP Scan
 
-  Job Type: Run
+Job Type: Run
 
-  Inventory: RHEL7 Development (Cliquez sur l'icône de la loupe pour sélectionner.)
+Inventory: EC2 Dynamic Inventory (Cliquez sur l'icône de la loupe pour sélectionner.)
 
-  Project: Automated Management (Cliquez sur l'icône de la loupe pour sélectionner.)
+Project: Automated Management (Cliquez sur l'icône de la loupe pour sélectionner.)
 
-  Execution Environment: smart_mgmt workshop execution environment (Cliquez sur l'icône de la loupe pour sélectionner.)
+Execution Environment: auto_satellite workshop execution environment (Cliquez sur l'icône de la loupe pour sélectionner.)
 
-  Playbook: configure_openscap.yml (Cliquez sur le menu déroulant pour sélectionner.)
+Playbook: configure_openscap.yml (Cliquez sur le menu déroulant pour sélectionner.)
 
-  Credentials: Workshop Credential, et Satellite Credential
-  (Cliquez sur l'icône de la loupe pour sélectionner.)
-    REMARQUE : Dans ce nouveau menu. Sélectionnez le bouton radio Workshop Credential
-    La "Catégorie sélectionnée" est "Machine". Ensuite, utilisez le menu déroulant
-    Selected Category " pour sélectionner Satellite_Collection.
-    Vous choisirez alors Satellite Credential. Vous aurez ainsi deux type de credential sélectionnés. En cliquant sur "Select", vous enregistrez vos modifications
-    et vous quitterez le menu.
+Credentials: Workshop Credential, et Satellite Credential
+(Cliquez sur l'icône de la loupe pour sélectionner.)
+  REMARQUE : Dans ce nouveau menu. Sélectionnez le bouton radio Workshop Credential
+  La "Catégorie sélectionnée" est "Machine". Ensuite, utilisez le menu déroulant
+  Selected Category " pour sélectionner Satellite_Collection.
+  Vous choisirez alors Satellite Credential. Vous aurez ainsi deux type de credential sélectionnés. En cliquant sur "Select", vous enregistrez vos modifications
+  et vous quitterez le menu.
 
-    Extra Variables (Respectez l'espacement exact indiqué ci-dessous. Notez que les
-    extra-vars que nous fournissons doivent être au format YAML):
+Extra Variables (Respectez l'espacement exact indiqué ci-dessous. Notez que les
+  extra-vars que nous fournissons doivent être au format YAML):
 
-  ---
-  HOSTS: node1.example.com
-  policy_name:
-    - PCI_Compliance
+---
+policy_name:
+  - PCI_Compliance
+---
+
+Limit: Cliquez sur la case "Prompt on launch"
 ....
 
 image::1-compliance/1-compliance-aap2-template1.png[aap_template]
 
 * Laissez le reste des champs comme ils sont, et cliquez sur 'Save'.
-Vous pouvez ensuite sélectionnez 'Launch' pour éxecuter la job template.
 
-Vous allez être amené à la fenêtre de sortie menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure] où vous pourrez suivre chaque tâche exécutée.
+* Une fois le modèle de travail enregistré, cliquez en haut à droite sur l'onglet Enquête, puis cliquez sur le bouton bleu "Add"
+Remplir les détails comme suit:
++
+....
+Question: Sélectionner un groupe d'inventaire
+
+Description: groupe d'inventaire
+
+Answer variable name: dynamic_inventory_group
+
+Answer type: Multiple Choice (sélection unique)
+
+Multiple Choice Options: RHEL7_Dev (cliquez la case pour la définir par défaut)
+                         all
+....
+
+image::1-compliance/1-compliance-aap2-template2.png[aap_template]
+
+* Une fois l'enquête créée, cliquez sur le curseur à côté du gris "Survey Disabled". Vous devriez maintenant voir "Survey Enabled".
+
+image::1-compliance/1-compliance-aap2-template3.png[aap_template]
+
+* Cliquez sur l'onglet Détails, puis en bas à gauche, sélectionnez "Launch" pour exécuter le modèle de tâche.
+
+*Dans l'enquête, saisissez "node1.example.com" pour la "Limit" et cliquez sur "Next". Pour "Sélectionner un groupe d'inventaire", laissez la sélection par défaut pour "RHEL7_Dev" et cliquez sur "Next". Examinez les entrées sur l'aperçu de lancement et l'avis défilant vers le bas confirme les entrées effectuées lors de l'enquête.
+
+image::1-compliance/1-compliance-aap2-template4.png[aap_template]
+
+* Cliquez sur le bouton "Launch"
+
+Vous allez être amené à la fenêtre de sortie menu:Jobs[SATELLITE / Compliance - OpenSCAP Scan] où vous pourrez suivre chaque tâche exécutée.
 Cela prendra environ 3 minutes pour terminer.
 Attendez que l'éxécution se termine avant de passer à l'étape suivante.
 
-image::1-compliance/1-compliance-aap2-OpenSCAP_Configure-output1.png[aap_output]
+image::1-compliance/1-compliance-aap2-OpenSCAP_Scan-output1.png[aap_output]
 
 [discrete]
 ==== 6. Aller de nouveau sur Satellite pour examiner le rapport de l'analyse Openscap (fichier Asset Reporting (ARF)).
@@ -151,13 +215,19 @@ image::1-compliance/1-compliance-aap2-OpenSCAP_Configure-output1.png[aap_output]
 * Retournez à la section *Rule Overview*.
 Vous pouvez trier par "Pass", "Fail", "Fixed", ou par tout nombre de qualificatifs souhaité ainsi que des règles de groupe par "Severity"
 
-image::1-compliance/1-compliance-aap2-Satellite_ARF.png[aap_arf]
+.Firefox browser
+[NOTER]
+Actuellement, les navigateurs Firefox ne peuvent pas afficher les filtres de présentation des règles.
 
-* Maintenant, décochez tout sauf la case *fail*.
+* La sélection d'une règle présente des informations détaillées sur la justification ainsi qu'une description de la règle qui comprend des références et des identifiants.
+* Maintenant, décochez tout sauf la case *fail*. Pour le menu déroulant "Group rules by", sélectionnez "Severity".
+
+image::1-compliance/1-compliance-aap2-Satellite_ARF1.png[aap_arf]
+
 Ensuite, faites défiler.
 cliquez sur le test "Prevent Login to Accounts With Empty Password"
 * Si vous défilez la page, vous remarquerez plusieurs options de rémédiation, y compris un snippet 'Ansible'.
-Cliquez sur "show" à côté du "Remediation Ansible Snippett", qui présente ensuite des tâches que vous pouvez inclure dans un playbook pour automatiser la rémédiation sur les systèmes touchés.
+Cliquez sur "show" à côté du "Remediation Ansible Snippet", qui présente ensuite des tâches que vous pouvez inclure dans un playbook pour automatiser la rémédiation sur les systèmes touchés.
 
 image::1-compliance/1-compliance-aap2-Satellite_ARF2.png[aap_arf]
 
@@ -196,26 +266,28 @@ Puis à "Hostgroups" cliquez sur "Submit
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP10.png[satellite_policy]
 
-* Maintenant, nous allons mettre à jour notre template OpenSCAP_Configure dans Ansible Automation Platform et lancer un autre analayse de conformité qui va inclure PCI et la nouvelle analyse STIG.
+image::1-compliance/1-compliance-aap2-Satellite_Compliance_Policies2.png[compliance_policies]
+
+* Maintenant, nous allons mettre à jour notre template OpenSCAP Scan dans Ansible Automation Platform et lancer un autre analayse de conformité qui va inclure PCI et la nouvelle analyse STIG.
 * Dans Ansible Automation Platform, cliquez sur 'Templates' dans le menu de la pane latérale gauche
 * Sélectionnez la job template Satellite/Compliiance - OpenSCAP_Configure, et cliquez sur éditer en bas de la job pour apporter des modifications aux « Variables Extra » :
 +
 ....
-  Extra Variables (Respectez l'espacement exact indiqué ci-dessous.
-  Notez que les extra-vars que nous fournissons doivent être
-  au format YAML):
+Extra Variables (Respectez l'espacement exact indiqué ci-dessous.
+Notez que les extra-vars que nous fournissons doivent être
+au format YAML):
 
-  ---
-  HOSTS: all
-  policy_name:
-    - PCI_Compliance
-    - STIG_Compliance
+---
+policy_name:
+  - PCI_Compliance
+  - STIG_Compliance
 ....
 
 image::1-compliance/1-compliance-aap2-template2-fix.png[aap_template]
 
 * Laissez le reste des champs comme ils sont, et cliquez sur 'Save'.
 Vous pouvez ensuite sélectionner 'Launch' pour éxécutez la job template.
+* Dans l'enquête, laissez le champ "Limit" vide, car nous allons cibler toutes les instances du groupe d'inventaire et cliquez sur "Next". Pour "Sélectionner un groupe d'inventaire", laissez la sélection par défaut pour "RHEL7_Dev" et cliquez sur "Next". Examinez les entrées sur l'aperçu de lancement et l'avis défilant vers le bas confirme les entrées effectuées lors de l'enquête. Cliquez sur "Launch".
 * L'éxécution va vous conduira à la fenêtre de sortie menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure].
 Cela prendra environ 5 minutes pour terminer.
 Attendez que l'éxécution se termine avant de passer à l'étape suivante.
