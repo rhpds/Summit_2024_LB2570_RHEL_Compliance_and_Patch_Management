@@ -10,7 +10,8 @@ In this workshop, you will learn how to automate Red Hat Enterprise Linux compli
 * <<presentations,Presentations>>
 * <<time-planning,Time planning>>
 * <<lab-diagram,Lab Diagram>>
-* <<Workshop-Exercises,Workshop Exercises>>
+* <<workshop-instances-startup,Workshop instances startup>>
+* <<workshop-exercises,Workshop Exercises>>
 
 == Use Cases
 
@@ -57,6 +58,33 @@ image::workbench_diagram.png[{lab_name} diagram,100%,100%]
 | Managed Host 3 - RHEL
 | node3
 |===
+
+== Workshop instances startup
+
+* Use a web browser on your computer to access the Ansible Automation Platform 2 Web UI
++
+[cols="~,~"]
+|===
+| Link
+| {automationcontroller_url}[{automationcontroller_url}^]
+
+| Username
+| `{automationcontroller_user_name}`
+
+| Password
+| `{automationcontroller_user_password}`
+|===
+
+* In Ansible Automation Platform click 'Templates' from the menu pane on left side.
+* In the Name filter box, enter "start workshop" and press enter or click the magnifying glass.
+
+image::start_workshop_instances_01.png[start instances]
+
+* Click the rocket icon to launch the "Z / Start workshop instances" workflow template.
+
+image::start_workshop_instances_02.png[start instances]
+
+* The Satellite and RHEL instances for the workshop will now be started. Please proceed with the workshop exercises.
 
 == Workshop Exercises
 
