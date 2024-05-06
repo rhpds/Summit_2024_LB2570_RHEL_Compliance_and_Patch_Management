@@ -72,14 +72,14 @@ Then click "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP2.png[satellite_policy]
 
-* Select the "Red Hat rhel7 default content" and "PCI-DSS v3.2.1 Control Baseline for Red Hat Enterprise Linux 7".
+* Select the "Red Hat rhel7 default content" and "PCI-DSS v4.0 Control Baseline for Red Hat Enterprise Linux 7".
 There is no tailoring file.
 Then click "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP3.png[satellite_policy]
 
 * It is necessary to set a schedule when creating a new compliance policy.
-You can select "Weekly" and "Monday" for the purposes of this exercise.
+You can select "Monthly" and "1" for Day of Month for the purposes of this exercise.
 Then click "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP4.png[satellite_policy]
@@ -111,11 +111,11 @@ This step will allow us to scan a single rhel7 host with the `PCI_Compliance` po
 Fill out the details as follows:
 +
 ....
-Name: SATELLITE / Compliance - OpenSCAP_Configure
+Name: SATELLITE / Compliance - OpenSCAP Scan
 
 Job Type: Run
 
-Inventory: RHEL7 Development (Click the magnifying glass icon to select.)
+Inventory: EC2 Dynamic Inventory (Click the magnifying glass icon to select.)
 
 Project: Automated Management (Click the magnifying glass icon to select.)
 
@@ -133,25 +133,56 @@ Credentials: Workshop Credential, and Satellite Credential
   two sets of credentials. Choosing 'Select' will save your changes
   and exit the menu.
 
-  Extra Variables (Keep the exact spacing provided below. Note that the
+Variables (Keep the exact spacing provided below. Note that the
   extra-vars that we are supplying need to be in YAML format):
 
 ---
-HOSTS: node1.example.com
 policy_name:
   - PCI_Compliance
+---
+
+Limit: Check the box "Prompt on launch"
 ....
 
 image::1-compliance/1-compliance-aap2-template1.png[aap_template]
 
 * Leave the rest of the fields blank or as they are, and click 'Save'.
-You can then select 'Launch' to run the job template.
 
-Selecting launch will take you to the menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure] output window where you will be able to follow the job as each task in the playbook executed.
+* With the job template saved, on the top right click the Survey tab, then click on the blue "Add" button.
+Fill out the details as follows:
++
+....
+Question: Select inventory group
+
+Description: inventory group
+
+Answer variable name: dynamic_inventory_group
+
+Answer type: Multiple Choice (single select)
+
+Multiple Choice Options: RHEL7_Dev (click the check box to make it default)
+                         all
+....
+
+image::1-compliance/1-compliance-aap2-template2.png[aap_template]
+
+* With the survey created, click the slider next to the gray "Survey Disabled". You should now see "Survey Enabled".
+
+image::1-compliance/1-compliance-aap2-template3.png[aap_template]
+
+* Click the Details tab and then on the bottom left select 'Launch' to run the job template.
+
+* On the survey, enter "node1.example.com" for the Limit and click Next. For "Select inventory group", leave the default selection for "RHEL7_Dev" and click Next. Review the entries on the launch Preview and notice scrolling down confirms the entries made during the survey.
+
+image::1-compliance/1-compliance-aap2-template4.png[aap_template]
+
+* Select "Launch".
+
+You will be presented with the menu:Jobs[SATELLITE / Compliance - OpenSCAP Scan] output window where you will be able to follow the job as each task in the playbook executed.
 This will take approximately 3 mins to complete.
 Wait for the job template to complete before proceeding to the next step.
 
-image::1-compliance/1-compliance-aap2-OpenSCAP_Configure-output1.png[aap_output]
+image::1-compliance/1-compliance-aap2-OpenSCAP_Scan-output1.png[aap_output]
 
 [discrete]
 ==== 6. Navigate back to Satellite to examine the Asset Reporting File (ARF).
