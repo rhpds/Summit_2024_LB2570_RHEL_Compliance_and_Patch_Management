@@ -190,13 +190,17 @@ image::1-compliance/1-compliance-aap2-OpenSCAP_Scan-output1.png[aap_output]
 * Hover over 'Hosts' from the side pane menu and then click on 'Reports'.
 * Click on the 'Full Report' button, under Actions, for 'node1.example.com' to see the report (This may take a few seconds)
 * Scroll down to the *Rule Overview* section.
-You can filter by "Pass", "Fail", "Fixed", or any number of qualifiers as well as group rules by "Severity"
+You can filter by "Pass", "Fail", "Fixed", or any number of qualifiers as well as group rules by "Severity".
+
+.Firefox browser
+[NOTE]
+Currently Firefox browsers are unable to display the Rule Overview filters.
 
 image::1-compliance/1-compliance-aap2-Satellite_ARF.png[aap_arf]
 
 * Selecting a rule presents detailed information regarding rationale as well as a description of the rule that includes references and identifiers.
 * Now, uncheck everything except the *fail* checkbox.
-Then scroll down and click on the failure "Prevent Login to Accounts With Empty Password"
+* Scroll down and click on the failure "Prevent Login to Accounts With Empty Password".
 * If you scroll the page you will notice multiple remediation options including an 'Ansible' snippet.
 Click "show" next to the 'Remediation Ansible snippet', which then presents tasks you can include within a playbook to automate remediation across affected systems.
 
