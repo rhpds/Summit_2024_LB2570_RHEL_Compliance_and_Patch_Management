@@ -188,7 +188,10 @@ image::1-compliance/1-compliance-aap2-OpenSCAP_Scan-output1.png[aap_output]
 ==== 6. Navigate back to Satellite to examine the Asset Reporting File (ARF).
 
 * Hover over 'Hosts' from the side pane menu and then click on 'Reports'.
-* Click on the 'Full Report' button, under Actions, for 'node1.example.com' to see the report (This may take a few seconds)
+
+image::1-compliance/1-compliance-aap2-Satellite_ARF.png[aap_arf]
+
+* Click on the 'Full Report' button, under Actions, for 'node1.example.com' to see the report (This may take a few seconds). The Openscap Capsule field will reflect your workshop Satellite host.
 * Scroll down to the *Rule Overview* section.
 You can filter by "Pass", "Fail", "Fixed", or any number of qualifiers as well as group rules by "Severity".
 
@@ -196,13 +199,14 @@ You can filter by "Pass", "Fail", "Fixed", or any number of qualifiers as well a
 [NOTE]
 Currently Firefox browsers are unable to display the Rule Overview filters.
 
-image::1-compliance/1-compliance-aap2-Satellite_ARF.png[aap_arf]
-
 * Selecting a rule presents detailed information regarding rationale as well as a description of the rule that includes references and identifiers.
-* Now, uncheck everything except the *fail* checkbox.
+* Uncheck everything except the *fail* checkbox. For the "Group rules by" drop down menu, select "Severity".
+
+image::1-compliance/1-compliance-aap2-Satellite_ARF1.png[aap_arf]
+
 * Scroll down and click on the failure "Prevent Login to Accounts With Empty Password".
-* If you scroll the page you will notice multiple remediation options including an 'Ansible' snippet.
-Click "show" next to the 'Remediation Ansible snippet', which then presents tasks you can include within a playbook to automate remediation across affected systems.
+* If you scroll the page you will notice multiple remediation option selections in green, including an 'Ansible' snippet.
+Click "Activate to reveal" arrow next to the 'Remediation Ansible snippet', which then presents tasks you can include within a playbook to automate remediation across affected systems.
 
 image::1-compliance/1-compliance-aap2-Satellite_ARF2.png[aap_arf]
 
@@ -213,7 +217,7 @@ This step will expand our OpenSCAP policy scan to add another XCCDF compliance p
 We will also expand to include all systems in the 'RHEL7 Development' inventory by adjusting the 'HOSTS' extra variable to 'all' instead of specifying a single system.
 
 * In Satellite, hover over "Hosts" from the menu on the left side of the screen, and then click on "Policies".
-* Click on the "New Compliance Policy" button
+* Click on the "New Compliance Policy" button on the top right.
 * Select "Manual" from the deployment options and click "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP6.png[satellite_policy]
@@ -230,27 +234,29 @@ Then click "Next"
 image::1-compliance/1-compliance-aap2-Satellite_SCAP8.png[satellite_policy]
 
 * It is necessary to set a schedule when creating a new compliance policy.
-You can select "Weekly" and "Monday" for lab purposes.
+You can select "Monthly" and "1" for Day of Month for the purposes of this exercise.
 Then click "Next"
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP9.png[satellite_policy]
 
 * Steps 5, 6, and 7 as part of the New Compliance Policy can use default values.
-Click "Next" through "Locations", "Organizations", and "Hostgroups"
+Click "Next" through "Locations", and "Organizations".
+On "Hostgroups" click "Submit" to create the policy.
 
 image::1-compliance/1-compliance-aap2-Satellite_SCAP10.png[satellite_policy]
 
-* Now, we will update our OpenSCAP_Configure job template in Ansible Automation Platform and run another PCI compliance scan, plus the STIG compliance scan.
+image::1-compliance/1-compliance-aap2-Satellite_Compliance_Policies2.png[compliance_policies]
+
+* Now, we will update our OpenSCAP Scan job template in Ansible Automation Platform and run another PCI compliance scan, plus the STIG compliance scan.
 * In Ansible Automation Platform, click 'Templates' from the left side pane menu
-* Select the OpenSCAP_Configure job template, and click edit at the bottom of the template to make changes to the "Extra Variables":
+* Select the OpenSCAP Scan job template, and click edit at the bottom of the template to make changes to the "Variables":
 +
 ....
-Extra Variables (Keep the exact spacing provided below.
+Variables (Keep the exact spacing provided below.
 Note that the extra-vars that we are supplying need to be
 in YAML format):
 
 ---
-HOSTS: all
 policy_name:
   - PCI_Compliance
   - STIG_Compliance
@@ -260,7 +266,8 @@ image::1-compliance/1-compliance-aap2-template2-fix.png[aap_template]
 
 * Leave the rest of the fields blank or as they are, and click 'Save'.
 You can then select 'Launch' to deploy the job template.
-* Selecting launch will take you to the menu:Jobs[SATELLITE / Compliance - OpenSCAP_Configure] output window.
+* On the survey, leave the Limit field empty, as we are going to target all instances in the inventory group and click Next. For "Select inventory group", leave the default selection for "RHEL7_Dev" and click Next. Review the entries on the launch Preview and notice scrolling down confirms the entries made during the survey. Click "Launch".
+* You will be presented with menu:Jobs[SATELLITE / Compliance - OpenSCAP Scan] output window.
 This will take approximately 5 mins to complete.
 Wait for the job template to complete before proceeding to the next step.
 
@@ -277,7 +284,7 @@ image::1-compliance/1-compliance-aap2-Satellite_ARF-Final.png[aap_arf]
 * Each report can be reviewed independent of other node scans and remediations for rule findings can be completed according to the requirements of your own internal policies.
 
 [discrete]
-==== 9. End Lab
+==== 9. End Exercise
 
-* You have finished the lab.
+* You have finished Exercise 1.
 * Continue to xref:../2-patching/README.adoc[Exercise 2: Patch Management / OS], OR xref:../index.adoc[Return to the main workshop page]
