@@ -18,7 +18,6 @@ L'utilisation de la plateforme Ansible Automation permet des scénarios de gesti
 
 == Préalables
 
-* Exercice 0 : Lab de configuration
 * Organisation à utiliser = Organisation par défaut
 * Lieu à utiliser = Lieu par défaut
 * Content View = RHEL7
@@ -30,6 +29,18 @@ L'utilisation de la plateforme Ansible Automation permet des scénarios de gesti
 ==== 1. Se connecter à la plate-forme d'automatisation Ansible
 
 * Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface utilisateur Ansible Automation Platform.
++
+[cols="~,~"]
+|===
+| Link
+| {automationcontroller_url}[{automationcontroller_url}^]
+
+| Username
+| `{automationcontroller_user_name}`
+
+| Password
+| `{automationcontroller_user_password}`
+|===
 
 image::2-patching/2-patching-aap2-login.png[login screen]
 
@@ -51,9 +62,9 @@ Vous pouvez toujours revenir à ce flux de travail à partir de template en sél
 image::2-patching/2-patching-aap2-workflow-start.png[workflow start]
 
 * Sélectionnez Start pour ajouter un noeud.
-Dans le menu déroulant "Node Type" sélectionnez "Inventory Source Sync" et cliquez sur "EC2 Dynamic Source - RHEL7 Development".
-Ceci établit l'inventaire que vous utiliserez dans votre flux de travail.
-Cliquez sur 'Save'.
+Dans le menu déroulant "Node Type" sélectionnez "Inventory Source Sync" et entrez "RHEL" dans le filtre Nom et appuyez sur Entrée. Sélectionnez "RHEL7 Development".
+Cela définit l'inventaire qui sera utilisé dans le flux de travail et garantit que la configuration d'inventaire la plus à jour est utilisée à chaque appel de flux de travail.
+Cliquez sur "Save".
 
 image::2-patching/2-patching-aap2-workflow-inventory-source.png[workflow inventory source]
 
@@ -61,19 +72,21 @@ image::2-patching/2-patching-aap2-workflow-inventory-source.png[workflow invento
 Dans le menu déroulant "Node Type" sélectionnez "Job Template" puis sélectionnez "SATELLITE / RHEL - Publish Content View".
 Laissez "Convergence" sur "Any".
 Cliquez sur Next - un formulaire est joint à cette template, vous aurez besoin de sélectionner le bon content view pour les serveurs que nous allons patcher.
-Sélectionnez le contente view 'RHEL7' et cliquez sur 'next'.
-Vous devrez alors confirmer l'aperçu de ce noeud de workflow en cliquant sur 'Save':
+Sélectionnez le contente view "RHEL7" et cliquez sur "Next".
+Vous devrez alors confirmer l'aperçu de ce noeud de workflow en cliquant sur "Save":
 
 image::2-patching/2-patching-aap2-workflow-publish-CV-preview.png[workflow inventory source]
 
 Cette étape dans le workflow ajoute votre première Job Template qui exécute un playbook appelé 'satellite_publish.yml'.
 
-* Ajouter le troisième noeud au flux de travail en survolant votre nœud d'inventaire 'EC2 Dynamic Source - RHEL7 Development' et sélectionnez l'icône + pour générer un autre noeud de workflow.
-Dans la fenêtre pop-up, sélectionnez 'On Success', puis Suivant.
+* Ajouter le troisième noeud au flux de travail en survolant votre noeud d'inventaire 'RHEL7 Development' et sélectionnez l'icône + pour générer un autre noeud de workflow.
+Dans la fenêtre pop-up, sélectionnez 'On Success', puis Next.
 Dans la fenêtre de suivi, Node Type sera 'Job Template'.
-Sélectionnez 'SERVER / RHEL7 - Fact Scan', laissez 'Convergence' à 'Any' et sélectionnez Suivant.
+Sélectionnez 'SERVER / Fact Scan', laissez 'Convergence' à 'Any' et sélectionnez Next.
+Laissez le champ 'Limit' vide pour cibler toutes les instances et sélectionnez "Next".
+Laissez le menu déroulant "Select inventory group" sur la sélection par défaut "RHEL7_Dev" et sélectionnez "Next".
 Cette étape dans le workflow analysera les noeuds dans notre inventaire satellite pour vérifier les mises à jour des paquets et errata.
-Vous n'avez pas besoin de limiter la job template, alors cliquez sur Suivant, puis Enregistrer pour terminer la configuration.
+Cliquez sur "Save" pour terminer la configuration du noeud.
 
 À ce stade, votre flux de travail devrait ressembler à ce qui suit:
 
@@ -93,20 +106,25 @@ Cliquez sur Next et sur Save.
 
 * Ajouter le dernier noeud en survolant 'SATELLITE / RHEL- Promote Content View' et en sélectionnant l'icône +.
 Dans la fenêtre pop-up, sélectionnez 'On Success', puis Suivant.
-Ajoutez la job template 'SERVER / RHEL7 - Patch', laissez 'Convergence' à 'Any' à nouveau et sélectionnez Next.
+Ajoutez la job template 'OS / Patch OS to latest', laissez 'Convergence' à 'Any' à nouveau et sélectionnez Next.
 Cete template à également un formulaire joint.
-Vous devrez sélectionner dans la liste déroulante 'Select Environment' l'environnement que vous aimeriez patcher.
-Choisissez 'RHEL7_Dev'.
-La liste déroulante 'Check' est une sélection qui indique à server_patch.yml s'il faut ou non appliquer les mises à jour aux serveurs de notre inventaire.
-Comme nous voulons appliquer les correctifs, nous allons sélectionner 'No'.
-Cliquez sur 'Next' en bas de la fenêtre et cliquez sur 'Save'.
-* Avant de pouvoir terminer le workflow, nous devons relier 'SERVER / RHEL7 - Fact Scan' à 'SERVER / RHEL7 - Patch' sur un succès.
-Passez sur 'SERVER / RHEL7 - Fact Scan' et cliquez sur l'icône de la chaîne.
-Cliquez ensuite sur la droite du nœud 'SERVER / RHEL7 - Patch' pour lier.
-Une nouvelle fenêtre vous permettera de choisir 'On Success'.
-Cliquez sur 'Save'.
-Vous devrez ensuite cliquer sur le bouton 'SERVER / RHEL7 - Patch', modifier le noeud et sélectionner 'ALL' depuis le menu deroulant CONVERGENCE.
-Continuer avec Next, Next et Save.
+Laissez le champ "Limit" vide pour cibler toutes les instances et sélectionnez "Next".
+Vous devrez sélectionner dans la liste déroulante 'Select Environment' l'environnement que vous aimeriez patcher. Choisissez 'RHEL7_Dev'.
+Pour 'Include kernel updates?', nous avons peut-être une situation dans laquelle un redémarrage n'est pas réalisable pour le moment, mais nous souhaitons quand même mettre à jour tout le reste. En tant que tel, définissez l'option 'Include kernel updates?' sélection sur 'No'.
+
+Le message 'Check for updates only? Do not patch at this time?' La liste déroulante est une sélection qui offre le choix entre appliquer les mises à jour ou simplement vérifier quelles mises à jour doivent être effectuées.
+Dans ce cas, nous voulons appliquer les correctifs, alors laissez la sélection sur "No".
+Cliquez sur "Next" en bas de la fenêtre, puis cliquez sur "Save" dans l'aperçu.
+
+image::2-patching/2-patching-aap2-workflow-patch-latest.png[patch latest]
+
+Avant de pouvoir terminer le flux de travail, nous devons lier 'SERVER / Fact Scan' au 'OS / Patch OS to latest' et couvrir le succès.
+Passez la souris sur 'SERVER / Fact Scan' et cliquez sur l'icône de chaîne.
+Cliquez ensuite à droite du noeud 'OS / Patch OS to latest' pour créer un lien.
+Un menu "Add Link" vous sera demandé pour les options d'exécution. Laissez la sélection définie pour 'On Success'.
+Cliquez sur "Save".
+Vous devrez ensuite survoler le noeud 'OS / Patch OS to latest' et modifier le noeud en cliquant sur l'icône en forme de crayon. Faites défiler jusqu'à la liste déroulante "Convergence" et sélectionnez "All".
+Continuez en cliquant sur "Next", "Next" et "Save".
 
 Votre workflow devrait ressembler à ce qui suit :
 
@@ -117,7 +135,19 @@ Vous pouvez maintenant sauvegarder et sortir du modèle de workflow.
 [discrete]
 ==== 3. Se connecter à Satellite
 
-* Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface Satellite
+* Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface Satellite:
++
+[cols="~,~"]
+|===
+| Link
+| {satellite_url}[{satellite_url}^]
+
+| Username
+| `{satellite_user_name}`
+
+| Password
+| `{satellite_user_password}`
+|===
 
 image::2-patching/2-patching-aap2-Satellite-login.png[Accès par satellite]
 
@@ -144,7 +174,8 @@ image::2-patching/2-patching-aap-Satellite-CV-RHEL7.png[Satellite RHEL7 CV]
 * Cliquez sur 'Content' puis 'Content Views' et sélectionnez RHEL7.
 Remarquez la nouvelle version du content view.
 * Naviguez sur Hosts > All Hosts et selectionnez node1.example.com.
-Sélectionnez l'onglet « content » sous Détails.
+Sélectionnez l'onglet 'content' sous Détails.
+Remarquez le "Installable Errata";
 C'est votre nombre d'errata avant d'exécuter votre flux de travail de patch.
 
 [discrete]
@@ -154,9 +185,9 @@ C'est votre nombre d'errata avant d'exécuter votre flux de travail de patch.
 Vous pouvez soit cliquer sur la fusée à droite de la template, soit sélectionner la template et sélectionner LAUNCH.
 * Observez le démarrage de la tâche dans Ansible.
 Vous devez attendre que ce flux de travail se termine avant de passer à l'étape suivante.
-Ce workflow devrait prendre ~ 6 minutes pour terminer.
-Observez les boîtes vertes qui s'étendent et se contractent dans chacun des nœuds de flux de travail.
-La case du nœud devient verte lorsque l'étape est terminée - vous pouvez également passer la souris sur un nœud de flux de travail pour voir son statut.
+Ce workflow devrait prendre ~5 minutes pour terminer.
+Observez les boîtes vertes qui s'étendent et se contractent dans chacun des noeuds de flux de travail.
+La case du noeud devient verte lorsque l'étape est terminée - vous pouvez également passer la souris sur un nœud de flux de travail pour voir son statut.
 
 image::2-patching/2-patching-aap2-workflow-in-progress.png[AAP Workflow in progress]
 
@@ -170,17 +201,17 @@ Sélectionnez l'onglet « content » sous Détails.
 Notez que les errata installables ont diminué.
 Cela indique que nous avons appliqué nos mises à jour.
 
-image::2-patching/2-patching-aap2-Satellite-reduced-installable-errata.png[errata réduite]
+image::2-patching/2-patching-aap2-Satellite-reduced-installable-errata.png[errata reduced]
 
 * Vous pouvez remarquer que tous les problèmes ne sont pas résolus.
 C'est pour montrer que vous pouvez exclure des mises à jour en fonction du type.
 Dans ce cas, nous n'avons pas appliquer les mises à jour du kernel.
 Ceci peut bien sûr être configuré en utilisant le module yum dans le playbook server_patch.yml
 
-image::2-patching/2-patching-aap2-server-patching-kernel-exclude.png[patchs du noyau exclus]
+image::2-patching/2-patching-aap2-server-patching-kernel-exclude.png[kernel patches excluded]
 
 [discrete]
 ==== 7. Fin du laboratoire
 
-* Félicitions, vou avez terminé le laboratoire !
+* Félicitions, vou avez terminé l'exercice 2.
 * xref:index.fr.adoc[Retour à la page principale de l'atelier]

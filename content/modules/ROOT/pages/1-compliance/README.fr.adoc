@@ -216,7 +216,7 @@ image::1-compliance/1-compliance-aap2-OpenSCAP_Scan-output1.png[aap_output]
 Vous pouvez trier par "Pass", "Fail", "Fixed", ou par tout nombre de qualificatifs souhaité ainsi que des règles de groupe par "Severity"
 
 .Firefox browser
-[NOTER]
+[Remarquez]
 Actuellement, les navigateurs Firefox ne peuvent pas afficher les filtres de présentation des règles.
 
 * La sélection d'une règle présente des informations détaillées sur la justification ainsi qu'une description de la règle qui comprend des références et des identifiants.
