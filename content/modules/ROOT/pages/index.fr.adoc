@@ -10,6 +10,7 @@ Dans cet atelier, vous apprendrez à tirer le meilleur parti de Red Hat Satellit
 * <<présentations,Présentations>>
 * <<planification-du-temps,Planification du temps>>
 * <<diagramme-du-laboratoire,Diagramme du laboratoire>>
+* <<atelier-instances-startup,démarrage des instances d'atelier>>
 * <<exercices,Exercices>>
 
 == Cas d'utilisation
@@ -58,6 +59,33 @@ image::workbench_diagram.png[diagramme automatique de laboratoire de gestion int
 | Host géré 3 - RHEL
 | node3
 |===
+
+== Démarrage des instances d'atelier
+
+* Utilisez un navigateur web sur votre ordinateur pour accéder à l'interface utilisateur Ansible Automation Platform.
++
+[cols="~,~"]
+|===
+| Link
+| {automationcontroller_url}[{automationcontroller_url}^]
+
+| Username
+| `{automationcontroller_user_name}`
+
+| Password
+| `{automationcontroller_user_password}`
+|===
+
+* Dans Ansible Automation Platform, cliquez sur "Templates" dans le volet de menu sur le côté gauche.
+* Dans la zone de filtre Nom, saisissez "start workshop" et appuyez sur Entrée ou cliquez sur la loupe.
+
+image::start_workshop_instances_01.png[start instances]
+
+* Cliquez sur l'icône de fusée pour lancer le modèle de workflow "Z / Start workshop instances".
+
+image::start_workshop_instances_02.png[start instances]
+
+* Les instances Satellite et RHEL de l'atelier vont maintenant être démarrées. Veuillez procéder aux exercices de l'atelier.
 
 == Exercices
 
