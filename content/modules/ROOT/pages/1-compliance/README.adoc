@@ -40,11 +40,23 @@ This exercise will focus on standard profiles for PCI and DISA STIG for RHEL sys
 [discrete]
 ==== 1. Logging into Satellite
 
-* Use a web browser on your computer to access the Satellite GUI provided , then login using the following nomenclature: _admin /_ <__password__>
+* Use a web browser on your computer to access the Satellite GUI provided.
++
+[cols="~,~"]
+|===
+| Link
+| {satellite_url}[{satellite_url}^]
+
+| Username
+| `{satellite_user_name}`
+
+| Password
+| `{satellite_user_password}`
+|===
 
 image::1-compliance/1-compliance-aap2-Satellite_login.png[login screen]
 
-* You will see the Satellite dashboard when you login
+* After entering the username and password on the login page, you will see the Satellite dashboard.
 
 image::1-compliance/1-compliance-aap2-Satellite_Dashboard.png[satellite_dash]
 
@@ -93,11 +105,23 @@ image::1-compliance/1-compliance-aap2-Satellite_SCAP5.png[satellite_policy]
 [discrete]
 ==== 4. Logging into the Ansible Automation Platform
 
-* Use a web browser on your computer to access the Ansible GUI via the link found in your Environment then login using the following nomenclature: _admin /_ <__password__>
+* Use a web browser on your computer to access the Ansible Automation Platform 2 Web UI
++
+[cols="~,~"]
+|===
+| Link
+| {automationcontroller_url}[{automationcontroller_url}^]
+
+| Username
+| `{automationcontroller_user_name}`
+
+| Password
+| `{automationcontroller_user_password}`
+|===
 
 image::1-compliance/1-compliance-aap2-login.png[login screen]
 
-* Once you have logged into Ansible Automation Platform 2, you will be shown the most recently visited page.
+* Once you have logged into Ansible Automation Platform 2, you will presented with the dashboard.
 
 image::1-compliance/1-compliance-aap2-dashboard.png[aap_dashboard]
 
