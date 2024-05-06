@@ -190,6 +190,8 @@ Multiple Choice Options: RHEL7_Dev (click the check box to make it default)
 
 image::1-compliance/1-compliance-aap2-template2.png[aap_template]
 
+* Once the survey details are configured, click "Save".
+
 * With the survey created, click the slider next to the gray "Survey Disabled". You should now see "Survey Enabled".
 
 image::1-compliance/1-compliance-aap2-template3.png[aap_template]
